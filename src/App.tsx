@@ -1,11 +1,12 @@
 "use client";
 
-import { Landing } from "./pages/Resume";
+// import { Landing } from "./pages/Resume";
+import { Pheonix } from "./pages/Resume/Pheonix";
 
 const App = () => {
   return (
     <>
-      <Landing />
+      <Pheonix/>
     </>
   );
 };

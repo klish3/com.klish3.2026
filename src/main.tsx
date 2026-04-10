@@ -5,18 +5,14 @@ import { Flowbite } from "flowbite-react";
 import App from "./App";
 import "./index.css";
 
-import { ComingSoon } from "./pages/ComingSoon";
+
 import { Nav } from "./components/Nav";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ComingSoon />,
-  },
-  {
-    path: "/home",
     element: <App />,
-  },
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
