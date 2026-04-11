@@ -2,11 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Flowbite } from "flowbite-react";
-import App from "./App";
+
 import "./index.css";
 
-
-import { Nav } from "./components/Nav";
 import { Pheonix } from "./pages/Resume/Pheonix";
 import { ComingSoon } from "./pages/ComingSoon";
 import { TimeLineKli } from "./components/Timeline";
