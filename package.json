@@ -39,5 +39,8 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2",
     "vite": "^6.0.0"
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }
