@@ -1,5 +1,6 @@
 ---
 title: "Building Resilient Insurance Systems with Event‑Driven Architecture"
+slug: "building-resilient-insurance-systems-with-event-driven-architecture-5"
 date: "2024-04-12"
 author: "Tawanda K"
 category: "Event‑Driven Architecture"
