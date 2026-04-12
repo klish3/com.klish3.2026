@@ -65,5 +65,21 @@ export const getAllPosts = (): Post[] => {
 
 export const getPostBySlug = (slug: string): Post | undefined => {
   const posts = getAllPosts();
-  return posts.find((post) => post.slug === slug);
+  // URL decode the slug to handle encoded characters in filenames
+  const decodedSlug = decodeURIComponent(slug);
+  
+  // First try exact match with decoded slug
+  let post = posts.find((post) => post.slug === decodedSlug);
+  
+  // Fallback: try case-insensitive match for robustness
+  if (!post) {
+    post = posts.find((post) => post.slug.toLowerCase() === decodedSlug.toLowerCase());
+  }
+  
+  // Fallback: try matching the URL-encoded version
+  if (!post) {
+    post = posts.find((post) => post.slug === slug);
+  }
+  
+  return post;
 };
