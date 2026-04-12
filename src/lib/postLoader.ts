@@ -1,3 +1,5 @@
+import { slugify } from "./slugify";
+
 // Vite's import.meta.glob with corrected syntax for newer versions
 const modules = import.meta.glob("/src/pages/Scribbles/posts/*.md", {
   query: "?raw",
@@ -42,7 +44,8 @@ export const getAllPosts = (): Post[] => {
   return Object.keys(modules).map((path) => {
     const rawContent = modules[path] as string;
     const { data, content } = parseFrontmatter(rawContent);
-    const slug = path.split("/").pop()?.replace(".md", "") || "";
+    const fileName = path.split("/").pop()?.replace(".md", "") || "";
+    const slug = data.slug || slugify(fileName);
 
     // Estimate read time
     const wordsPerMinute = 200;
@@ -65,21 +68,7 @@ export const getAllPosts = (): Post[] => {
 
 export const getPostBySlug = (slug: string): Post | undefined => {
   const posts = getAllPosts();
-  // URL decode the slug to handle encoded characters in filenames
-  const decodedSlug = decodeURIComponent(slug);
+  const normalizedSlug = slugify(slug);
   
-  // First try exact match with decoded slug
-  let post = posts.find((post) => post.slug === decodedSlug);
-  
-  // Fallback: try case-insensitive match for robustness
-  if (!post) {
-    post = posts.find((post) => post.slug.toLowerCase() === decodedSlug.toLowerCase());
-  }
-  
-  // Fallback: try matching the URL-encoded version
-  if (!post) {
-    post = posts.find((post) => post.slug === slug);
-  }
-  
-  return post;
+  return posts.find((post) => post.slug === normalizedSlug);
 };
