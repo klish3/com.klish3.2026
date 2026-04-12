@@ -4,6 +4,7 @@ import flowbite from "flowbite/plugin";
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -33,5 +34,6 @@ export default {
     require("flowbite/plugin")({
       charts: true,
     }),
+    require("@tailwindcss/typography"),
   ],
 };

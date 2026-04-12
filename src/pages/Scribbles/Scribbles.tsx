@@ -1,95 +1,79 @@
-import React from "react";
-import { Calendar, Clock, User } from "lucide-react";
+import { ArrowUpRight, Calendar, Clock, User } from "lucide-react";
+import { getAllPosts } from "../../lib/postLoader";
+import { Link } from "react-router-dom";
 
-const posts = [
-  {
-    title: "The Future of Web Development in 2024",
-    excerpt: "Exploring the rise of AI-driven development and the evolution of modern frontend frameworks.",
-    date: "April 10, 2024",
-    readTime: "5 min read",
-    author: "Tawanda K",
-    category: "Technology",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    title: "Mastering TypeScript for Enterprise Applications",
-    excerpt: "Deep dive into advanced TypeScript patterns that help build scalable and maintainable codebases.",
-    date: "March 28, 2024",
-    readTime: "8 min read",
-    author: "Tawanda K",
-    category: "Coding",
-    image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    title: "Designing for Dark Mode: Best Practices",
-    excerpt: "How to create beautiful and accessible dark mode interfaces that users will love.",
-    date: "March 15, 2024",
-    readTime: "4 min read",
-    author: "Tawanda K",
-    category: "Design",
-    image: "https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&q=80&w=800"
-  }
-];
+const posts = getAllPosts();
+
+
 
 export const Scribbles: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 py-20 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-16">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-4">
-            <span className="bg-gradient-to-r from-emerald-400 to-sky-600 bg-clip-text text-transparent">Scribbles</span> & Thoughts
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            A space where I write about technology, design, and my journey as a technical lead.
-          </p>
-        </div>
+    <>
+      <div className="mt-24 md:mt-40">
+        <p className="text-sm uppercase tracking-[0.2em] text-stone-500 dark:text-stone-400">
+          Thoughts & Observations
+        </p>
+        <h1 className="mt-6 text-5xl md:text-8xl font-medium leading-[0.95] tracking-tight text-stone-900 dark:text-stone-50">
+          Scribbles <span className="italic font-light text-stone-500 dark:text-stone-400">& Thoughts.</span>
+        </h1>
+        <p className="mt-10 max-w-2xl text-lg md:text-xl text-stone-600 dark:text-stone-300 leading-relaxed">
+          Sharing perspective on technology, design leadership, and the 
+          future of front-end engineering in a rapidly evolving landscape.
+        </p>
+      </div>
 
-        <div className="space-y-12">
+      <section className="mt-32 md:mt-48 border-t border-stone-200 dark:border-stone-800 pt-16">
+        <div className="space-y-24">
           {posts.map((post, index) => (
-            <article key={index} className="group cursor-pointer">
-              <div className="flex flex-col md:flex-row gap-8 items-start">
-                <div className="w-full md:w-1/3 shrink-0 overflow-hidden rounded-2xl aspect-[16/9] md:aspect-square">
+            <Link to={`/scribbles/${post.slug}`} key={post.slug || index} className="block group">
+              <article className="grid grid-cols-1 md:grid-cols-12 gap-8 cursor-pointer">
+              <div className="md:col-span-3">
+                <div className="aspect-[4/5] overflow-hidden rounded-sm bg-stone-100 dark:bg-stone-900 grayscale hover:grayscale-0 transition-all duration-700">
                   <img 
                     src={post.image} 
                     alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 bg-sky-100 dark:bg-sky-900/30 px-2 py-1 rounded">
-                      {post.category}
-                    </span>
-                  </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-emerald-500 transition-colors">
-                    {post.title}
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 md:line-clamp-none">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      {post.date}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4" />
-                      {post.readTime}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <User className="h-4 w-4" />
-                      {post.author}
-                    </div>
-                  </div>
+                <div className="mt-6 flex flex-col gap-2 text-[10px] uppercase tracking-widest font-bold text-stone-400">
+                   <div className="flex items-center gap-2">
+                     <Calendar className="h-3 w-3" /> {post.date}
+                   </div>
+                   <div className="flex items-center gap-2">
+                     <Clock className="h-3 w-3" /> {post.readTime}
+                   </div>
                 </div>
               </div>
-              {index !== posts.length - 1 && (
-                <div className="mt-12 border-b border-gray-100 dark:border-gray-800"></div>
-              )}
+              
+              <div className="md:col-span-9 flex flex-col justify-between">
+                <div>
+                  <span className="text-[10px] uppercase tracking-widest font-bold text-stone-500 dark:text-stone-400 mb-4 block">
+                    {post.category}
+                  </span>
+                  <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-stone-900 dark:text-stone-50 group-hover:text-stone-500 transition-colors leading-tight">
+                    {post.title}
+                  </h2>
+                  <p className="mt-6 text-lg text-stone-600 dark:text-stone-300 leading-relaxed max-w-2xl">
+                    {post.excerpt}
+                  </p>
+                </div>
+                
+                <div className="mt-8 pt-8 border-t border-stone-100 dark:border-stone-900 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-sm text-stone-500">
+                    <User className="h-4 w-4" /> {post.author}
+                  </div>
+                  <button className="inline-flex items-center gap-2 text-sm font-medium text-stone-900 dark:text-stone-100 group/btn">
+                    Read article
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                  </button>
+                </div>
+              </div>
             </article>
+          </Link>
           ))}
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 };
+

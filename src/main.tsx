@@ -2,29 +2,28 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Flowbite } from "flowbite-react";
-import App from "./App";
 import "./index.css";
 
 
-import { Nav } from "./components/Nav";
+import { MainLayout } from "./components/MainLayout";
+
 import { Pheonix } from "./pages/Resume/Pheonix";
 import { ComingSoon } from "./pages/ComingSoon";
 import { TimeLineKli } from "./components/Timeline";
 import { Landing } from "./pages/Resume";
 import { Hacks } from "./pages/Hacks";
-import { Scribbles } from "./pages/Scribbles";
+import { Scribbles, ScribblePost } from "./pages/Scribbles";
 import LandingPage from "./LandingPage/LandingPage";
-
-const Layout = () => (
-  <Flowbite>
-    {/* <Nav /> */}
-    <Outlet />
-  </Flowbite>
-);
 
 const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: (
+      <Flowbite>
+        <MainLayout>
+          <Outlet />
+        </MainLayout>
+      </Flowbite>
+    ),
     children: [
       {
         path: "/",
@@ -53,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/scribbles",
         element: <Scribbles />,
+      },
+      {
+        path: "/scribbles/:slug",
+        element: <ScribblePost />,
       },
     ],
   },

@@ -14,13 +14,17 @@
   "dependencies": {
     "@million/lint": "^0.0.39",
     "@module-federation/vite": "^1.9.4",
+    "@tailwindcss/typography": "^0.5.19",
     "apexcharts": "^3.52.0",
     "flowbite-react": "^0.7.5",
+    "gray-matter": "^4.0.3",
     "lucide-react": "^0.577.0",
     "prettier": "^3.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^6.26.0"
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^6.26.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
