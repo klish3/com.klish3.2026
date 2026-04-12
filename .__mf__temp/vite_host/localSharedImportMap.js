@@ -8,11 +8,6 @@
           let pkg = await import("__mf__virtual/vite_host__prebuild__react__prebuild__.js");
             return pkg;
         }
-      ,
-        "react/jsx-runtime": async () => {
-          let pkg = await import("__mf__virtual/vite_host__prebuild__react_mf_1_jsx_mf_2_runtime__prebuild__.js");
-            return pkg;
-        }
       
     }
       const usedShared = {
@@ -25,42 +20,14 @@
             from: "vite_host",
             async get () {
               if (false) {
-                throw new Error(`Shared module '${"react"}' must be provided by host`);
+                throw new Error(`[Module Federation] Shared module '${"react"}' must be provided by host`);
               }
               usedShared["react"].loaded = true
               const {"react": pkgDynamicImport} = importMap
               const res = await pkgDynamicImport()
-              const exportModule = {...res}
-              // All npm packages pre-built by vite will be converted to esm
-              Object.defineProperty(exportModule, "__esModule", {
-                value: true,
-                enumerable: false
-              })
-              return function () {
-                return exportModule
-              }
-            },
-            shareConfig: {
-              singleton: true,
-              requiredVersion: "^19.2.3",
-              
-            }
-          }
-        ,
-          "react/jsx-runtime": {
-            name: "react/jsx-runtime",
-            version: "19.2.3",
-            scope: ["default"],
-            loaded: false,
-            from: "vite_host",
-            async get () {
-              if (false) {
-                throw new Error(`Shared module '${"react/jsx-runtime"}' must be provided by host`);
-              }
-              usedShared["react/jsx-runtime"].loaded = true
-              const {"react/jsx-runtime": pkgDynamicImport} = importMap
-              const res = await pkgDynamicImport()
-              const exportModule = {...res}
+              const exportModule = false && "react" === "react"
+                ? (res?.default ?? res)
+                : {...res}
               // All npm packages pre-built by vite will be converted to esm
               Object.defineProperty(exportModule, "__esModule", {
                 value: true,
@@ -79,6 +46,22 @@
         
     }
       const usedRemotes = [
+                {
+                  entryGlobalName: "esm_remote",
+                  name: "vite_remote",
+                  type: "module",
+                  entry: "https://[...]/remoteEntry.js",
+                  shareScope: "default",
+                }
+          ,
+                {
+                  entryGlobalName: "var_remote",
+                  name: "var_remote",
+                  type: "var",
+                  entry: "https://[...]/remoteEntry.js",
+                  shareScope: "default",
+                }
+          
       ]
       export {
         usedShared,
