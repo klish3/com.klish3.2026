@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin } from "lucide-react";
 
 /**
  * Variant 1 — Editorial / Metric-Forward Minimalism
