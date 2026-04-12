@@ -10,7 +10,7 @@ export default defineConfig({
   },
 
   plugins: [react()],
-  base: "/",
+  base: "",
   build: {
     target: ['es2022', 'chrome89', 'edge89', 'firefox89', 'safari15'],
     assetsDir: 'assets',
