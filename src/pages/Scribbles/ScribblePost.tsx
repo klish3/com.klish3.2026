@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { getPostBySlug, Post } from "../../lib/postLoader";
 
@@ -44,6 +42,8 @@ export const ScribblePost: React.FC = () => {
       </div>
     );
   }
+
+  const PostComponent = post.Component;
 
   return (
     <div className="min-h-screen bg-white dark:bg-stone-950 pt-32 pb-20 px-4">
@@ -90,9 +90,7 @@ export const ScribblePost: React.FC = () => {
           prose-p:leading-relaxed prose-p:text-stone-700 dark:prose-p:text-stone-300
           prose-a:text-stone-900 dark:prose-a:text-stone-100 prose-a:underline underline-offset-4
           prose-img:rounded-sm">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {post.content}
-          </ReactMarkdown>
+          {PostComponent ? <PostComponent /> : null}
         </article>
       </div>
     </div>

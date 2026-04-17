@@ -1,9 +1,8 @@
+import React from "react";
 import { slugify } from "./slugify";
 
-// Vite's import.meta.glob with corrected syntax for newer versions
-const modules = import.meta.glob("/src/pages/Scribbles/posts/*.md", {
-  query: "?raw",
-  import: "default",
+// Vite's import.meta.glob correctly configured for TSX modules
+const modules = import.meta.glob("/src/pages/Scribbles/posts/*.tsx", {
   eager: true,
 });
 
@@ -15,42 +14,16 @@ export interface Post {
   category: string;
   image: string;
   excerpt: string;
-  content: string;
   readTime: string;
+  Component: React.ComponentType; // React component
 }
-
-// Simple regex-based frontmatter parser for browser compatibility
-const parseFrontmatter = (fileContent: string) => {
-  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
-  const match = fileContent.match(frontmatterRegex);
-
-  if (!match) return { data: {}, content: fileContent };
-
-  const yamlBlock = match[1];
-  const content = match[2];
-  const data: Record<string, string> = {};
-
-  yamlBlock.split("\n").forEach((line) => {
-    const [key, ...valueParts] = line.split(":");
-    if (key && valueParts.length > 0) {
-      data[key.trim()] = valueParts.join(":").trim().replace(/^["']|["']$/g, "");
-    }
-  });
-
-  return { data, content };
-};
 
 export const getAllPosts = (): Post[] => {
   return Object.keys(modules).map((path) => {
-    const rawContent = modules[path] as string;
-    const { data, content } = parseFrontmatter(rawContent);
-    const fileName = path.split("/").pop()?.replace(".md", "") || "";
+    const mod = modules[path] as any;
+    const data = mod.meta || {};
+    const fileName = path.split("/").pop()?.replace(".tsx", "") || "";
     const slug = data.slug || slugify(fileName);
-
-    // Estimate read time
-    const wordsPerMinute = 200;
-    const wordCount = content.split(/\s+/).length;
-    const readTime = `${Math.ceil(wordCount / wordsPerMinute)} min read`;
 
     return {
       slug,
@@ -60,8 +33,9 @@ export const getAllPosts = (): Post[] => {
       category: data.category || "General",
       image: data.image || "",
       excerpt: data.excerpt || "",
-      content,
-      readTime,
+      // Standardize a fallback readTime if not provided in meta
+      readTime: data.readTime || "5 min read",
+      Component: mod.default, // To render inline
     } as Post;
   }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };

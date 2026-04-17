@@ -13,6 +13,8 @@ import { TimeLineKli } from "./components/Timeline";
 import { Landing } from "./pages/Resume";
 import { Hacks } from "./pages/Hacks";
 import { Scribbles, ScribblePost } from "./pages/Scribbles";
+import { Creator } from "./pages/Creator";
+import { Vibes } from "./pages/Vibes";
 import LandingPage from "./LandingPage/LandingPage";
 
 const router = createBrowserRouter([
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
       {
         path: "/scribbles/:slug",
         element: <ScribblePost />,
+      },
+      {
+        path: "/creator",
+        element: <Creator />,
+      },
+      {
+        path: "/vibes",
+        element: <Vibes />,
       },
     ],
   },

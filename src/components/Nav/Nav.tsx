@@ -1,56 +1,29 @@
-import { DarkThemeToggle, Navbar } from "flowbite-react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { ThemeToggle } from "../ThemeToggle";
 
 export const Nav = () => {
   return (
-    <Navbar fluid rounded>
-      <Navbar.Brand href="/">
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Klish3
-        </span>
-      </Navbar.Brand>
-      <div className="flex md:order-2">
-        <DarkThemeToggle />
-        <Navbar.Toggle />
-      </div>
-      <Navbar.Collapse>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `block py-2 pr-4 pl-3 md:p-0 ${
-              isActive
-                ? "text-blue-700 dark:text-blue-500"
-                : "text-gray-700 hover:text-blue-700 dark:text-gray-400 dark:hover:text-white"
-            }`
-          }
-        >
-          Resume
-        </NavLink>
-        <NavLink
-          to="/hacks"
-          className={({ isActive }) =>
-            `block py-2 pr-4 pl-3 md:p-0 ${
-              isActive
-                ? "text-blue-700 dark:text-blue-500"
-                : "text-gray-700 hover:text-blue-700 dark:text-gray-400 dark:hover:text-white"
-            }`
-          }
-        >
-          Hacks
-        </NavLink>
-        <NavLink
-          to="/scribbles"
-          className={({ isActive }) =>
-            `block py-2 pr-4 pl-3 md:p-0 ${
-              isActive
-                ? "text-blue-700 dark:text-blue-500"
-                : "text-gray-700 hover:text-blue-700 dark:text-gray-400 dark:hover:text-white"
-            }`
-          }
-        >
-          Scribbles
-        </NavLink>
-      </Navbar.Collapse>
-    </Navbar>
+    <nav className="flex items-center gap-6 text-stone-500 dark:text-stone-400">
+      {/* <Link
+        to="/hacks"
+        className="transition-colors hover:text-stone-900 dark:hover:text-stone-100"
+      >
+        Hacks
+      </Link> */}
+      <Link
+        to="/vibes"
+        className="transition-colors hover:text-stone-900 dark:hover:text-stone-100"
+      >
+        Vibes
+      </Link>
+      <Link
+        to="/scribbles"
+        className="transition-colors hover:text-stone-900 dark:hover:text-stone-100"
+      >
+        Scribbles
+      </Link>
+
+      <ThemeToggle />
+    </nav>
   );
 };
