@@ -7,9 +7,9 @@ export const Vibes: React.FC = () => {
       id: "claims-architecture-synthwave",
       title: "Digital Claims Architecture — Synthwave Explorer",
       description:
-        "An interactive 80s arcade-themed architecture visualiser with vertical parallax, horizontal deep-dives, character select (FE/BE/QA/Product perspectives), Zod-validated state, and a full FNOL Component View map modal recreated from Daniel Eason's HLD.",
+        "An interactive 80s arcade-themed architecture visualiser with vertical parallax, horizontal deep-dives, character select (FE/BE/QA/Product perspectives), Zod-validated state, and a full FNOL Component View map modal.",
       type: "Full Stack Tool",
-      url: "https://claude.ai/public/artifacts/claims-architecture-synthwave",
+      url: "https://claude.ai/public/artifacts/cc1783f1-62d9-45ab-88de-bc01a75c37d0",
       icon: <Terminal className="h-5 w-5" />,
       date: "April 2026",
       tags: [
