@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Upload, FileText, CheckCircle, AlertCircle } from "lucide-react";
+import { Upload, CheckCircle, AlertCircle } from "lucide-react";
 
 export const Creator: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
-  const [status, setStatus] = useState<"idle" | "uploading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "uploading" | "success" | "error"
+  >("idle");
   const [message, setMessage] = useState("");
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -28,7 +30,7 @@ export const Creator: React.FC = () => {
     }
 
     setStatus("uploading");
-    
+
     try {
       const text = await file.text();
       const response = await fetch("/api/convert-md", {
@@ -42,7 +44,9 @@ export const Creator: React.FC = () => {
       const data = await response.json();
       if (response.ok && data.success) {
         setStatus("success");
-        setMessage(`Successfully converted to ${data.slug}.tsx! Check your posts folder.`);
+        setMessage(
+          `Successfully converted to ${data.slug}.tsx! Check your posts folder.`,
+        );
       } else {
         throw new Error(data.error || "Failed to convert file");
       }
@@ -57,14 +61,16 @@ export const Creator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-stone-950 flex flex-col items-center justify-center p-4 pt-32">
-      <div className="max-w-2xl w-full">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-stone-900 dark:text-stone-50">
-            Post <span className="italic font-light text-stone-500">Creator.</span>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-white p-4 pt-32 dark:bg-stone-950">
+      <div className="w-full max-w-2xl">
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl font-medium tracking-tight text-stone-900 dark:text-stone-50 md:text-5xl">
+            Post{" "}
+            <span className="font-light italic text-stone-500">Creator.</span>
           </h1>
           <p className="mt-4 text-stone-600 dark:text-stone-400">
-            Drag and drop a Markdown (.md) file here to instantly convert it into a React TSX post component.
+            Drag and drop a Markdown (.md) file here to instantly convert it
+            into a React TSX post component.
           </p>
         </div>
 
@@ -73,10 +79,12 @@ export const Creator: React.FC = () => {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           className={`
-            border-2 border-dashed rounded-xl p-16 text-center transition-all duration-300
-            ${isDragging 
-              ? "border-stone-900 bg-stone-50 dark:border-stone-100 dark:bg-stone-900" 
-              : "border-stone-200 hover:border-stone-300 dark:border-stone-800 dark:hover:border-stone-700 bg-transparent"}
+            rounded-xl border-2 border-dashed p-16 text-center transition-all duration-300
+            ${
+              isDragging
+                ? "border-stone-900 bg-stone-50 dark:border-stone-100 dark:bg-stone-900"
+                : "border-stone-200 bg-transparent hover:border-stone-300 dark:border-stone-800 dark:hover:border-stone-700"
+            }
           `}
         >
           <div className="flex flex-col items-center justify-center gap-4">
@@ -85,40 +93,50 @@ export const Creator: React.FC = () => {
             ) : status === "error" ? (
               <AlertCircle className="h-16 w-16 text-red-500" />
             ) : (
-              <div className="p-4 bg-stone-100 dark:bg-stone-900 rounded-full">
-                <Upload className={`h-8 w-8 ${isDragging ? "text-stone-900 dark:text-stone-100 animate-bounce" : "text-stone-400"}`} />
+              <div className="rounded-full bg-stone-100 p-4 dark:bg-stone-900">
+                <Upload
+                  className={`h-8 w-8 ${isDragging ? "animate-bounce text-stone-900 dark:text-stone-100" : "text-stone-400"}`}
+                />
               </div>
             )}
-            
+
             <div className="mt-4">
               {status === "uploading" ? (
-                <p className="text-lg font-medium text-stone-900 dark:text-stone-100">Converting...</p>
+                <p className="text-lg font-medium text-stone-900 dark:text-stone-100">
+                  Converting...
+                </p>
               ) : status === "success" ? (
                 <div>
-                  <p className="text-lg font-medium text-stone-900 dark:text-stone-100">Conversion Complete</p>
-                  <p className="text-sm text-stone-500 dark:text-stone-400 mt-2">{message}</p>
+                  <p className="text-lg font-medium text-stone-900 dark:text-stone-100">
+                    Conversion Complete
+                  </p>
+                  <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
+                    {message}
+                  </p>
                 </div>
               ) : status === "error" ? (
                 <div>
                   <p className="text-lg font-medium text-red-500">Error</p>
-                  <p className="text-sm text-stone-500 dark:text-stone-400 mt-2">{message}</p>
+                  <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
+                    {message}
+                  </p>
                 </div>
               ) : (
                 <>
                   <p className="text-lg font-medium text-stone-900 dark:text-stone-100">
                     Drop your markdown file here
                   </p>
-                  <p className="text-sm text-stone-500 dark:text-stone-400 mt-2">
+                  <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
                     Supports frontmatter metadata and standard markdown
                   </p>
                 </>
               )}
             </div>
-            
+
             {status !== "uploading" && status !== "idle" && (
-              <button 
+              <button
                 onClick={() => setStatus("idle")}
-                className="mt-6 px-4 py-2 text-sm font-medium border border-stone-200 dark:border-stone-800 rounded-md hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors"
+                className="mt-6 rounded-md border border-stone-200 px-4 py-2 text-sm font-medium transition-colors hover:bg-stone-50 dark:border-stone-800 dark:hover:bg-stone-900"
               >
                 Upload another file
               </button>
