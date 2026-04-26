@@ -1,18 +1,19 @@
 import react from "@vitejs/plugin-react";
 import tailwind from "tailwindcss";
-import { defineConfig } from "vite";
+import { defineConfig, ViteDevServer, Connect } from "vite";
 import fs from "fs";
+import http from "http";
 import path from "path";
 import matter from "gray-matter";
 
 function mdConverterPlugin() {
   return {
     name: 'md-converter',
-    configureServer(server: any) {
-      server.middlewares.use(async (req: any, res: any, next: any) => {
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use(async (req: Connect.IncomingMessage, res: http.ServerResponse, next: Connect.NextFunction) => {
         if (req.url === '/api/convert-md' && req.method === 'POST') {
           let body = '';
-          req.on('data', (chunk: any) => body += chunk);
+          req.on('data', (chunk: Buffer) => body += chunk);
           req.on('end', () => {
             try {
               const { data, content } = matter(body);
@@ -56,9 +57,10 @@ export default function ${safeComponentName}() {
               
               res.statusCode = 200;
               res.end(JSON.stringify({ success: true, path: outPath, slug }));
-            } catch (err: any) {
+            } catch (err: unknown) {
+              const errorMessage = err instanceof Error ? err.message : String(err);
               res.statusCode = 500;
-              res.end(JSON.stringify({ error: err.message }));
+              res.end(JSON.stringify({ error: errorMessage }));
             }
           });
         } else {
