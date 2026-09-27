@@ -15,6 +15,7 @@ import { Hacks } from "./pages/Hacks";
 import { Scribbles, ScribblePost } from "./pages/Scribbles";
 import { Creator } from "./pages/Creator";
 import { Vibes } from "./pages/Vibes";
+import { CollisionFnolPage } from "./pages/CollisionFnol";
 import LandingPage from "./LandingPage/LandingPage";
 
 const router = createBrowserRouter([
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "/vibes",
         element: <Vibes />,
+      },
+      {
+        path: "/collision-fnol",
+        element: <CollisionFnolPage />,
       },
     ],
   },

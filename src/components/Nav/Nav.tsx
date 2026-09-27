@@ -17,6 +17,12 @@ export const Nav = () => {
         Vibes
       </Link>
       <Link
+        to="/collision-fnol"
+        className="transition-colors hover:text-stone-900 dark:hover:text-stone-100"
+      >
+        FNOL
+      </Link>
+      <Link
         to="/scribbles"
         className="transition-colors hover:text-stone-900 dark:hover:text-stone-100"
       >
